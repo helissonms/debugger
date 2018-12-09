@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Response;
-use App\User;
+use App\Entities\User;
 
 class DenyPublicRegisterOfUsers
 {
