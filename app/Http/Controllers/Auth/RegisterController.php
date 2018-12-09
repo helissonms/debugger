@@ -75,6 +75,9 @@ class RegisterController extends Controller
                 'password' => Hash::make($data['password']),
             ]);
 
+            $user->email_verified_at = now();
+            $user->save();
+
             Cache::forget('doesntHaveAnyUserRegistered');
         } catch (Exception $exception) {
             report($exception);
