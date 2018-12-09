@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Entities\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Exception;
 
 class RegisterController extends Controller
 {
@@ -66,10 +68,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        try {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+            ]);
+
+            Cache::forget('doesntHaveAnyUserRegistered');
+        } catch (Exception $exception) {
+            report($exception);
+        }
+
+        return $user;
     }
 }
