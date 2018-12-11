@@ -69,20 +69,21 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         try {
-            $user = User::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-            ]);
-
+            $user = new User;
+            $user->name = $data['name'];
+            $user->email = $data['email'];
+            $user->password = Hash::make($data['password']);
             $user->email_verified_at = now();
+            $user->is_admin = true;
             $user->save();
 
-            Cache::forget('doesntHaveAnyUserRegistered');
+            Cache::forget('doesntHaveAnAdminRegistered');
+
+            return $user;
         } catch (Exception $exception) {
             report($exception);
         }
 
-        return $user;
+        return false;
     }
 }

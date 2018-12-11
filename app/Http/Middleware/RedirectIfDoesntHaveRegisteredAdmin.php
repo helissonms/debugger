@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Support\Facades\Cache;
 use App\Entities\User;
 
-class RedirectIfDoesntHaveRegisteredUsers
+class RedirectIfDoesntHaveRegisteredAdmin
 {
     /**
      * Handle an incoming request.
@@ -21,16 +21,16 @@ class RedirectIfDoesntHaveRegisteredUsers
             return $next($request);
         }
 
-        if ($this->doesntHaveAnyUserRegistered()) {
+        if ($this->doesntHaveAnAdminRegistered()) {
             return redirect()->route('register');
         }
 
         return $next($request);
     }
 
-    private function doesntHaveAnyUserRegistered()
+    private function doesntHaveAnAdminRegistered()
     {
-        return Cache::rememberForever('doesntHaveAnyUserRegistered', function () {
+        return Cache::rememberForever('doesntHaveAnAdminRegistered', function () {
             return ! User::take(1)->orderBy('id')->exists();
         });
     }
