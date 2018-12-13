@@ -28,7 +28,7 @@ class RedirectIfDoesntHaveRegisteredAdmin
         return $next($request);
     }
 
-    private function doesntHaveAnAdminRegistered()
+    protected function doesntHaveAnAdminRegistered()
     {
         return Cache::rememberForever('doesntHaveAnAdminRegistered', function () {
             return ! User::take(1)->orderBy('id')->exists();
