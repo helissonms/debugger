@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Entities\Project;
 use Illuminate\Http\Request;
+use App\Http\Requests\Project as ProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -14,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::orderBy('name')->paginate(3);
+        $projects = Project::orderBy('name')->paginate();
 
         if ($projects->count() <= 0) {
             return redirect()->route('projects.create');
@@ -38,18 +39,20 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('projects.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Project  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        //
+        Project::create($request->all());
+
+        return back()->with('message', 'Project has been created!');
     }
 
     /**
