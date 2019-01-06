@@ -16,9 +16,7 @@ Auth::routes([
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::redirect('/home', '/', 301);
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::redirect('/', '/projects', 301);
 
-    Route::get('/me', function () {
-        return auth()->user();
-    })->name('me');
+    Route::resource('projects', 'ProjectController');
 });
