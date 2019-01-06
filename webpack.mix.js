@@ -11,17 +11,11 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/public', 'public/js')
-   .react('resources/js/app', 'public/js')
+mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
-
-if (!mix.inProduction()) {
-    mix.webpackConfig({
-        devtool: 'source-map'
-    })
-    .sourceMaps(false);
-}
 
 if (mix.inProduction()) {
     mix.version();
+} else {
+    mix.sourceMaps(false, 'source-map');
 }

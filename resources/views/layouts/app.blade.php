@@ -43,6 +43,6 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ mix('js/public.js') }}" async></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 </body>
 </html>
