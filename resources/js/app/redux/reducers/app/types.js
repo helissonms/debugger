@@ -1,7 +1,10 @@
 const prefix = 'app'
 
-export const TOGGLE_NAVBAR = `${prefix}:TOGGLE_NAVBAR`
+export const FETCHING = `${prefix}:FETCHING`
+
+export const SUCCESS = `${prefix}:SUCCESS`
 
 export default {
-    TOGGLE_NAVBAR
+    FETCHING,
+    SUCCESS
 }

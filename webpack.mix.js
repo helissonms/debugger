@@ -13,8 +13,14 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/public', 'public/js')
    .react('resources/js/app', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css')
-   .sourceMaps(false);
+   .sass('resources/sass/app.scss', 'public/css');
+
+if (!mix.inProduction()) {
+    mix.webpackConfig({
+        devtool: 'source-map'
+    })
+    .sourceMaps(false);
+}
 
 if (mix.inProduction()) {
     mix.version();
